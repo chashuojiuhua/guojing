@@ -1,0 +1,3 @@
+const {PrismaClient} = require('@prisma/client'); const bcrypt = require('bcrypt'); const prisma = new PrismaClient();
+async function main(){ await prisma.role.upsert({where:{name:'ADMIN'},update:{},create:{name:'ADMIN'}}); await prisma.role.upsert({where:{name:'USER'},update:{},create:{name:'USER'}}); const pw=await bcrypt.hash('AdminPass123!',12); await prisma.user.upsert({where:{email:'admin@jiuhua.local'},update:{},create:{email:'admin@jiuhua.local',passwordHash:pw,fullName:'Admin', role:{connect:{name:'ADMIN'}}}}); await prisma.product.createMany({data:[{name:'Jiuhua Premium',slug:'jiuhua-polygonatum-premium',priceCents:198000,inventory:50,tags:['tea','premium']}]})
+} main().catch(e=>{console.error(e);process.exit(1)}).finally(()=>process.exit());

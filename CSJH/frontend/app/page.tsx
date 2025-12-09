@@ -1,0 +1,1 @@
+export default function Page(){return <main className='p-6'>九华禅茶 前端占位</main>}
